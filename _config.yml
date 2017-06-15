@@ -9,7 +9,7 @@ relative_permalinks: false
 title:               Charl Mert
 #tagline:             'foo's website
 description:         Charl Mert Blog...
-url: https://dyndna.github.io/lanyon-plus
+url: https://charljmert.github.io
 baseurl: ""
 urlimg: https://dyndna.github.io/lanyon-plus/images/
 markdown: kramdown
