@@ -1,9 +1,9 @@
 ---
 layout: post
-title: "Example content"
-date: "2013-01-01"
-slug: "example_content"
-description: "Example content from lanyon. If page description is more than 140 words, it will be shown as post summary on home page and blog index else post excerpt will be shown. Same rule is for html meta description: >140 words in description or first 50 words of posts will be shown as summary. Page excerpt supports markdown formatted summary."
+title: "LVM Metadata Repair"
+date: "2017-06-15"
+slug: "lvm-metadata-repair"
+description: "Reparing a corrupt LVM Metadata Volume"
 category: 
   - views
   - featured
@@ -27,12 +27,17 @@ summaryfeed: false
 ## for twitter card with large image:
 # imagefeature: "http://img.youtube.com/vi/VEIrQUXm_hY/0.jpg"
 ## for twitter video card: (active for this page)
-videofeature: "https://www.youtube.com/embed/iG9CE55wbtY"
-imagefeature: "http://img.youtube.com/vi/iG9CE55wbtY/0.jpg"
+#videofeature: "https://www.youtube.com/embed/iG9CE55wbtY"
+#imagefeature: "http://img.youtube.com/vi/iG9CE55wbtY/0.jpg"
 videocredit: tedtalks
 ---
 
-Howdy! This is an example blog post that shows features supported in **lanyon-plus** theme. See [raw post](https://raw.githubusercontent.com/dyndna/lanyon-plus/master/_posts/2013-01-01-example-content.md) for required YAML header and liquid tag specifications.
+We had a real issue on our Proxmox (LVM Thin). Our metadata usage was up to 99.6% and it was causing all sorts of disk issues as well as the incorrect disk usage being reported. 
+
+We were suppose to have about 900G out of 2.7T free after adding a 1T physical drive to the local container but proxmox was reporting about 2.6T usage. 
+We were able to solve the metadata problem after much googling and if you're stuck in the same boat this post might be able to help you. 
+
+This also solved our disk usage issue as the correct disk space of about 1.3T was being reported. There are steps to take to free up some of the mapped thin volume space which might have solved it as well but we definitely noticed everything just magically working again after repairing the metadata.
 
 <!--more-->
 
