@@ -2,6 +2,9 @@
 layout: post
 title: Debug Jekyll Themes
 slug: debug-jekyll-themes
+category: 
+  - views
+  - featured
 # date element overrides date in title format.
 date: 2017-06-15
 tag:
@@ -9,7 +12,13 @@ tag:
   - lanyon-plus
 ---
 
-[Jekyll](http://jekyllrb.com) is a static site generator, an open-source tool for creating simple yet powerful websites of all shapes and sizes. From [the project's readme](https://github.com/mojombo/jekyll/blob/master/README.markdown):
+### Grab a theme here
+<http://jekyllthemes.org/>
+
+```bash
+bundle exec jekyll serve --incremental
+```
+browse to http://localhost:4000/
 
 <!--more-->
 
