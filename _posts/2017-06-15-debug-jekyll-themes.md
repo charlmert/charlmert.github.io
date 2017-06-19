@@ -44,6 +44,11 @@ gemspec
 
 rm .Gemfile.lock
 bundle install
+
+# delete generated html files
+find _site/ -type f -delete
+
+# run server, generate new html
 bundle exec jekyll serve --incremental
 
 vi _config.yml
