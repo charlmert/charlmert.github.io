@@ -96,13 +96,13 @@ metadata to 2G, it might be needed to swap out the metadata completely.
 This can be achieved by:
 
 ## 2. Making sure thin volumes are not active
-### 2.1 If you don't want to boot into single user mode you could try and deactivate the volumes manually via:
+### 2.1 If you can, boot into single user mode
 (before qemu/kvm starts) as the thin lvm volumes cannot be active (lvchange -an "to deactivate volumes will fail if volumes are active"). In our case they were being used by the kvm process.
 
 Google on how to change grub init params to boot into single user mode OR rather from another live boot iso such that the kvm doesn't get started and the 
 thin volumes don't become active or used by another process.
 
-### 2.2 If you don't want to boot into single user mode you could try and deactivate the volumes manually via:
+### 2.2 If you don't want to boot into single user mode you could try and deactivate the volumes manually via
 List the thin volumes which belong to pve/data thin pool
 ```bash
 lvdisplay | grep -iE "lv pool name.*data" -B6 | grep -i "lv path"
