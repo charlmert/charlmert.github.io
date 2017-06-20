@@ -40,9 +40,14 @@ videocredit: tedtalks
 ```
 
 The office PC has ssh listening on port 12344.
-Server with static ip 22.23.24.25 forwards connections from localhost:12343 to the office PC @port 12344
 
-The script is run from the office PC (like teamviewer)
+Server with static ip 22.23.24.25 forwards connections from 0.0.0.0:12343 on the *server* to the office PC @port 12344
+
+This command is run from the office PC (like teamviewer)
+
+```bash
+ssh -p12344 -o 'ExitOnForwardFailure yes' -fN -v -R 0.0.0.0:12343:localhost:18421 charl@22.23.24.25
+```
 
 So from an *ssh terminal on the server* I can reach the office PC.
 
@@ -81,10 +86,10 @@ if [ $(whoami) != 'root' ]; then
         exit 1
 fi
 
-PID=$(ps aux | grep "ssh -p12344 -o 'ExitOnForwardFailure yes' -fN -v -R 0.0.0.0:12343:localhost:18421 charl@41.185.28.226" | grep -v grep | awk '{print $2}')
+PID=$(ps aux | grep "ssh -p12344 -o 'ExitOnForwardFailure yes' -fN -v -R 0.0.0.0:12343:localhost:18421 charl@22.23.24.25" | grep -v grep | awk '{print $2}')
 if [ -z "$PID" ]; then
 	echo "restarting tunnel..."
-	ssh -p12344 -o 'ExitOnForwardFailure yes' -fN -v -R 0.0.0.0:12343:localhost:18421 charl@41.185.28.226
+	ssh -p12344 -o 'ExitOnForwardFailure yes' -fN -v -R 0.0.0.0:12343:localhost:18421 charl@22.23.24.25
 else
 	echo "ok"
 fi
