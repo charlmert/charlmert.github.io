@@ -6,7 +6,7 @@ permalink: /blog/:year/:month/:day/:title/
 relative_permalinks: false
 
 # Setup
-title:               Charl Mert
+title:               Charl Joseph Mert
 #tagline:             'foo's website
 description:         Charl Mert Blog...
 url: https://charljmert.github.io

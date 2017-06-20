@@ -1,7 +1,7 @@
 ---
 layout: default
 permalink: index.html
-title: Bubble Gum Blog
+title: Charl Joseph Mert
 description: "Blogging on ...."
 ---
 <div class="posts">

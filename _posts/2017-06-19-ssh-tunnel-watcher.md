@@ -46,12 +46,14 @@ Server with static ip 22.23.24.25 forwards connections from 0.0.0.0:12343 on the
 This command is run from the office PC (like teamviewer)
 
 ```bash
+# from office PC
 ssh -p12344 -o 'ExitOnForwardFailure yes' -fN -v -R 0.0.0.0:12343:localhost:18421 charl@22.23.24.25
 ```
 
 So from an *ssh terminal on the server* I can reach the office PC.
 
 ```bash
+# from server
 ssh -p 12344 charl@localhost
 ```
 
