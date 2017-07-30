@@ -9,7 +9,7 @@ relative_permalinks: false
 title:               Charl Joseph Mert
 #tagline:             'foo's website
 description:         Charl Mert Blog...
-url: https://charljmert.github.io
+url: https://charl.faceclues.co.za
 baseurl: ""
 urlimg: https://dyndna.github.io/lanyon-plus/images/
 markdown: kramdown
