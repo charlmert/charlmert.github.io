@@ -118,7 +118,7 @@ THE SOFTWARE.
             $(".select2-results__options li").each(function() {
                 id = $(this).attr('id');
 
-                if (id && display_ids.indexOf(id.match(/-\d*$/)[0].replace('-','')) > -1) {
+                if (id && id.match(/-\d*$/) && display_ids.indexOf(id.match(/-\d*$/)[0].replace('-','')) > -1) {
 
 					if (has_children(id.match(/-\d*$/)[0].replace('-',''))) {
                         //TODO: callback to decorate bold items
@@ -225,7 +225,7 @@ THE SOFTWARE.
             id = $(this).attr('id');
 
             for (x = 0; (x < parent_ids.length); x++) {
-                if (id && parent_ids[x].id == id.match(/-\d*$/)[0].replace('-','') && parent_ids[x].parent_id == parent_id) {
+                if (id && id.match(/-\d*$/) && parent_ids[x].id == id.match(/-\d*$/)[0].replace('-','') && parent_ids[x].parent_id == parent_id) {
 					if (has_children(id.match(/-\d*$/)[0].replace('-',''))) {
 						$(this).css('font-weight', 'bold');
 
