@@ -16,8 +16,6 @@ tags:
   - "select2 google tree"
   - "select2 tree"
 ---
-
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -68,8 +66,8 @@ tags:
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>-->
     <script src="/public/vendor/select2gtree/js/select2/4.0.3/select2.js"></script>
     <script src="/public/vendor/select2gtree/js/select2/4.0.3/i18n/en.js"></script>
-    <!--<script src="/public/vendor/select2gtree/js/select2gtree.js"></script>-->
-    <script src="assets/js/select2gtree.js"></script>
+    <script src="/public/vendor/select2gtree/js/select2gtree.js"></script>
+    <!--<script src="assets/js/select2gtree.js"></script>-->
 
   </head>
 
