@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: empty
 permalink: /select2gtree/
 title: "Select2 Google Tree"
 show_meta: false
