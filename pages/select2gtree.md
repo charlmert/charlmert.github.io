@@ -1,7 +1,7 @@
 ---
 layout: page
 permalink: /select2gtree/
-title: Select2 Google Tree
+title: "Select2 Google Tree"
 show_meta: false
 published: true
 description: "Select2 Google Style Tree"
@@ -31,17 +31,17 @@ tags:
     <title>Select2 Google Style Tree</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/public/vendor/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="vendor/bootstrap/3.3.7/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="/public/vendor/bootstrap/3.3.7/css/ie10-viewport-bug-workaround.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="vendor/bootstrap/3.3.7/css/jumbotron.css" rel="stylesheet">
+    <link href="/public/vendor/bootstrap/3.3.7/css/jumbotron.css" rel="stylesheet">
 
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="vendor/bootstrap/3.3.7/js/ie-emulation-modes-warning.js"></script>
+    <script src="/public/vendor/bootstrap/3.3.7/js/ie-emulation-modes-warning.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -52,12 +52,12 @@ tags:
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <!--<script src="vendor/jquery/js/1.12.4/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="vendor/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <!--<script src="/public/vendor/jquery/js/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js//public/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/public/vendor/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     -->
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="vendor/bootstrap/3.3.7/js/ie10-viewport-bug-workaround.js"></script>
+    <script src="/public/vendor/bootstrap/3.3.7/js/ie10-viewport-bug-workaround.js"></script>
 
     <!-- Select2 Tree View Components
     ================================================== -->
@@ -66,9 +66,9 @@ tags:
     <script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>-->
-    <script src="vendor/select2gtree/js/select2/4.0.3/select2.js"></script>
-    <script src="vendor/select2gtree/js/select2/4.0.3/i18n/en.js"></script>
-    <!--<script src="vendor/select2gtree/js/select2gtree.js"></script>-->
+    <script src="/public/vendor/select2gtree/js/select2/4.0.3/select2.js"></script>
+    <script src="/public/vendor/select2gtree/js/select2/4.0.3/i18n/en.js"></script>
+    <!--<script src="/public/vendor/select2gtree/js/select2gtree.js"></script>-->
     <script src="assets/js/select2gtree.js"></script>
 
   </head>
