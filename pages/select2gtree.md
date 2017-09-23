@@ -74,7 +74,9 @@ tags:
     <link rel="stylesheet"
           href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
     <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-    <link href="vendor/highlight.js/css/atelier-forest-light.css" rel="stylesheet" />
+    <link href="/public/vendor/highlight.js/css/atelier-forest-light.css" rel="stylesheet" />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+
 
   </head>
 
