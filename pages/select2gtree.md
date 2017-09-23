@@ -69,10 +69,24 @@ tags:
     <script src="/public/vendor/select2gtree/js/select2gtree.js"></script>
     <!--<script src="assets/js/select2gtree.js"></script>-->
 
+    <!-- highlight.js code highlighting
+    ================================================== -->
+    <link rel="stylesheet"
+          href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/default.min.css">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <link href="vendor/highlight.js/css/atelier-forest-light.css" rel="stylesheet" />
+
   </head>
 
   <body>
 
+<script>
+$(document).ready(function() {
+  $('pre code').each(function(i, block) {
+    hljs.highlightBlock(block);
+  });
+});
+</script>
 <!--
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
@@ -114,6 +128,9 @@ tags:
       <div class="row">
         <div class="col-md-4">
           <h2>Default Tree</h2>
+          <p>
+<pre><code class="javascript">$("#timezone1").select2gtree();</code></pre>
+          </p>
           <p>
       <div class="form-group" id="timezone-group" style="margin-bottom: 5px;" class="col-sm-12 col-md-12 col-lg-12">
         <label class="col-sm-4 col-md-4 col-lg-4 control-label">Time Zone 1</label>
@@ -371,7 +388,9 @@ tags:
         <div class="col-md-4">
           <h2>Without "Use" Button</h2>
           <p>
-
+<pre><code class="javascript">$("#timezone2").select2gtree({
+    showUseButton: false
+});</code></pre>
           </p>
           <p>
       <div class="form-group" id="timezone2-group" style="margin-bottom: 5px;" class="col-sm-12 col-md-12 col-lg-12">
@@ -626,8 +645,9 @@ tags:
 
        </div>
         <div class="col-md-4">
-          <h2>Select2 Without Tree</h2>
+          <h2>Set Selected</h2>
           <p>
+<pre><code class="javascript">$('#timezone3').select2gtree({setSelected : 4});</code></pre>
 
           </p>
           <p>
@@ -878,7 +898,7 @@ tags:
           </p>
             <script type="text/javascript">
                 $('#timezone3').select2gtree();
-                $('#timezone3').select2gtree({setSelected : 4});
+                $('#timezone3').select2gtree({setSelected : 36});
             </script>
 
           <!--<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>-->
