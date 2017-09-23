@@ -129,6 +129,8 @@ $(document).ready(function() {
       <!-- Example row of columns -->
       <div class="row">
         <div class="col-md-4">
+      <div class="form-group" id="timezone-group" style="margin-bottom: 5px;">
+        <div class="col-sm-12 col-md-12 col-lg-12">
           <h2>Default Tree</h2>
           <p>
 <pre><code class="javascript">$("#timezone1").select2gtree();
@@ -137,11 +139,7 @@ $(document).ready(function() {
 </code></pre>
           </p>
           <p>
-      <div class="form-group" id="timezone-group" style="margin-bottom: 5px;" class="col-sm-12 col-md-12 col-lg-12">
-        <label class="col-sm-4 col-md-4 col-lg-4 control-label">Time Zone 1</label>
-
-        <div class="col-sm-8 col-md-8 col-lg-8">
-<select id='timezone1' class='select2-gtree1' style="width:100%" name="timezone">
+<select id='timezone1' class='select2-gtree1' style="width:100%" name="timezone1">
 
     <option value='1' parent='0' selected> Africa </option>
     <option value='2' parent='0'> America </option>
@@ -378,11 +376,11 @@ $(document).ready(function() {
 
 </select>
 
+          </p>
         </div>
       </div>
 
 <br/>
-          </p>
         <script type="text/javascript">
             $(".select2-gtree1").select2gtree({
                 showUseButton: true
@@ -391,17 +389,16 @@ $(document).ready(function() {
 
         </div>
         <div class="col-md-4">
+      <div class="form-group" id="timezone2-group" style="margin-bottom: 5px;">
+        <div class="col-sm-12 col-md-12 col-lg-12">
           <h2>Without "Use" Button</h2>
           <p>
 <pre><code class="javascript">$("#timezone2").select2gtree({
     showUseButton: false
 });</code></pre>
           </p>
-          <p style="margin-top: 20px">
-      <div class="form-group" id="timezone2-group" style="margin-bottom: 5px;" class="col-sm-12 col-md-12 col-lg-12">
-        <label class="col-sm-4 col-md-4 col-lg-4 control-label">Time Zone 2</label>
+          <p>
 
-        <div class="col-sm-8 col-md-8 col-lg-8">
 <select id='timezone2' class='select2-gtree2' style="width:100%" name="timezone2">
 
     <option value='1' parent='0'> Africa </option>
@@ -639,12 +636,12 @@ $(document).ready(function() {
 
 </select>
 
+          </p>
         </div>
       </div>
 
 <br/>
 
-          </p>
         <script type="text/javascript">
             $(".select2-gtree2").select2gtree({
                 showUseButton: false
@@ -653,6 +650,8 @@ $(document).ready(function() {
 
        </div>
         <div class="col-md-4">
+      <div class="form-group" id="timezone-group" style="margin-bottom: 5px;">
+        <div class="col-sm-12 col-md-12 col-lg-12">
           <h2>Set Selected</h2>
           <p>
 <pre><code class="javascript">$('#timezone3').select2gtree({setSelected : 4});
@@ -661,11 +660,7 @@ $(document).ready(function() {
 
           </p>
           <p>
-      <div class="form-group" id="timezone-group" style="margin-bottom: 5px;" class="col-sm-12 col-md-12 col-lg-12">
-        <label class="col-sm-4 col-md-4 col-lg-4 control-label">Time Zone 3</label>
-
-        <div class="col-sm-8 col-md-8 col-lg-8">
-<select id="timezone3" class='select2-gtree' style="width:100%" name="test_select2">
+<select id="timezone3" class='select2-gtree' style="width:100%" name="timezone3">
 
     <option value='1' parent='0'> Africa </option>
     <option value='2' parent='0'> America </option>
@@ -902,10 +897,10 @@ $(document).ready(function() {
 
 </select>
 
+          </p>
         </div>
       </div>
 
-          </p>
             <script type="text/javascript">
                 $('#timezone3').select2gtree();
                 $('#timezone3').select2gtree({setSelected : 36});
