@@ -24,23 +24,27 @@ THE SOFTWARE.
 
 (function($) {
 	$.fn.select2gtree = function(options) {
+        if ($(this).data('select2gtree')) {
+            return false;
+        }
+
 		var defaults = {
 			language: "en",
 			theme: "bootstrap",
 			showUseButton: true,
-			showBreadcrumb: true
+			showBreadcrumbs: true
 		};
 
 		//DONE: fix back button not going back to root when selecting a 2nd level child and clicking back twice
 		//DONE: fix speed issue, back button child select
-		//TODO: fix back button on nested default selected
-		//TODO: scroll to selected item
-		//TODO: add showBreadcrumb option
+		//DONE: add showBreadcrumbs option
+        //DONE: $('timezone').val(1).change(); select2 changes the value already
+		//TODO: fix back button, breadcrumbs on nested default selected
         //TODO: demo templateResult styling
+		//TODO: scroll to selected item
+        //TODO: enable tooltip and partial breadcrumb view for searches where the child items are the same in different trees
         //TODO: enable multi select
-        //TODO: option to display breadcrumbs in main input text box
         //TODO: support ajax loaded menu items
-        //DONE: set_selected from js via $('timezone').val(1).change();
 
         var opts = $.extend(defaults, options);
 
@@ -73,6 +77,8 @@ THE SOFTWARE.
             select2_core(this);
 
             //console.log(jQuery._data( $(this).get(0), "events" ));
+            // Will create prototype optimized class and export here
+            $(this).data('select2gtree', true);
         }
 	};
 
@@ -95,14 +101,14 @@ THE SOFTWARE.
         var opts = $(obj).data('options');
 
         select2_obj.on('select', function (e) {
-            if (opts.showBreadcrumb) {
+            if (opts.showBreadcrumbs) {
                 clear_breadcrumbs();
                 $('#' + target_id).text(selected_text);
             }
         });
 
         select2_obj.on('close', function (params) {
-            if (opts.showBreadcrumb) {
+            if (opts.showBreadcrumbs) {
                 clear_breadcrumbs();
                 $('#' + target_id).text(prev_selected_text);
             }
@@ -145,7 +151,7 @@ THE SOFTWARE.
 		if (open_counter[instance_id] == 0) {
             // Breadcrumb
             /*
-            if (opts.showBreadcrumb) {
+            if (opts.showBreadcrumbs) {
                 if ($('.select2gtree-breadcrumb')) {
                     $('.select2gtree-breadcrumb').remove();
                 }
@@ -166,7 +172,7 @@ THE SOFTWARE.
 			$('#select2tree_back').on('mousedown', function(){
 				parent_id = breadcrumb.pop();
 
-                if (opts.showBreadcrumb) {
+                if (opts.showBreadcrumbs) {
                     breadcrumb_texts.pop();
                     update_breadcrumb(breadcrumb_texts);
                 }
@@ -200,7 +206,7 @@ THE SOFTWARE.
                     return;
                 }
 
-                if (opts.showBreadcrumb) {
+                if (opts.showBreadcrumbs) {
                     $(this).on('mouseover', function() {
                         breadcrumb_texts.push(text);
                         update_breadcrumb(breadcrumb_texts);
@@ -217,7 +223,7 @@ THE SOFTWARE.
                 if (id && id.match(/-\d*$/) && display_ids.indexOf(id.match(/-\d*$/)[0].replace('-','')) > -1) {
 
 					if (has_children(id.match(/-\d*$/)[0].replace('-',''))) {
-                        if (opts.showBreadcrumb) {
+                        if (opts.showBreadcrumbs) {
                             if ($('.select2gtree-breadcrumb')) {
                                 $('.select2gtree-breadcrumb').show('fast');
                             }
@@ -266,7 +272,7 @@ THE SOFTWARE.
 
                             breadcrumb.push(parent_id);
 
-                            if (opts.showBreadcrumb) {
+                            if (opts.showBreadcrumbs) {
                                 breadcrumb_texts.push($(this).text());
                                 update_breadcrumb(breadcrumb_texts);
                             }
@@ -392,7 +398,7 @@ THE SOFTWARE.
                     var cparent_id = get_parent_id(cid);
                     breadcrumb.push(cparent_id);
 
-                    if (opts.showBreadcrumb) {
+                    if (opts.showBreadcrumbs) {
                         breadcrumb_texts.push($(this).text());
                         update_breadcrumb(breadcrumb_texts);
                     }
