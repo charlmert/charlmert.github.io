@@ -1,7 +1,7 @@
 /*
 The MIT License
 
-Copyright (c) 2017 Charl Joseph Mert, Inc. https://github.com/charljmert/select2gtree
+Copyright (c) 2017 Charl Joseph Mert, Inc. http://charl.faceclues.co.za/select2gtree/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
@@ -30,13 +30,15 @@ THE SOFTWARE.
 			showUseButton: true
 		};
 
-        //TODO: set_selected from js via $('timezone').val(1).change();
-		//TODO: scroll to selected item
+		//TODO: fix back button not going back to root when selecting a 2nd level child and clicking back twice
+		//TODO: fix speed issue, back button child select
 		//TODO: fix back button on nested default selected
+		//TODO: scroll to selected item
         //TODO: add options for decorator callbacks
         //TODO: enable multi select
         //TODO: option to display breadcrumbs in main input text box
         //TODO: support ajax loaded menu items
+        //DONE: set_selected from js via $('timezone').val(1).change();
 
         var opts = $.extend(defaults, options);
 
@@ -61,17 +63,46 @@ THE SOFTWARE.
 		instance_id = $(this).data('select2gtree_id');
 		if (open_counter[instance_id] == 0) {
             $(this).data('options', opts);
+            //$(this).select2(opts);
+
             $(this).select2(opts).on("select2:open", open);
+
+            select2_obj = $(this).data('select2');
+            select2_core();
+
+            //console.log(jQuery._data( $(this).get(0), "events" ));
         }
 	};
 
     var instance_count = 0;
     var display_ids = [];
     var parent_ids = [];
+    var parent_idsx = [];
     var select_ptr = null;
     var open_counter = [];
     var breadcrumb = [];
     var selectOriginalEvent = null;
+    var select2_obj = null;
+
+    function select2_core() {
+        //console.log(select2_obj);
+
+        select2_obj.on('close', function (params) {
+            breadcrumb = [];
+        });
+
+        /*
+        select2_obj.on('open', function (params) {
+            console.log('open:message [' + params + ']');
+        });
+
+        select2_obj.$container.trigger('results:message', {
+          message: 'noResults' 
+        });
+
+        console.log(select2_obj.results);
+        //*/
+    }
 
     //TODO: decorate and bind elements once
 	function open() {
@@ -101,6 +132,7 @@ THE SOFTWARE.
 			$('#select2tree_back').on('mousedown', function(){
 				parent_id = breadcrumb.pop();
 				//console.log(breadcrumb);
+
 				open_children(parent_id);
 			});
         }
@@ -118,11 +150,18 @@ THE SOFTWARE.
             $(".select2-results__options li").each(function() {
                 id = $(this).attr('id');
 
+                var parent_id;
+                if (typeof $(this).data('data') !== undefined && typeof $(this).data('data').element !== undefined) {
+                    parent_id = $($(this).data('data').element).attr('parent')
+                } else {
+                    return;
+                }
+
                 if (id && id.match(/-\d*$/) && display_ids.indexOf(id.match(/-\d*$/)[0].replace('-','')) > -1) {
 
 					if (has_children(id.match(/-\d*$/)[0].replace('-',''))) {
                         //TODO: callback to decorate bold items
-						//$(this).decorateBold($this); 
+						//$(this).decorateBold($this);
 						////console.log($(this).text());
 						$(this).css('font-weight', 'bold');
 
@@ -130,12 +169,14 @@ THE SOFTWARE.
                         if (opts.showUseButton) {
                             $(this).data('mouseover_counter', 0);
                             var item = $(this);
-                            $('#' + id).on('mouseover', function() {
+                            $('#' + id).off('mouseover.s2gt_use');
+                            $('#' + id).on('mouseover.s2gt_use', function() {
                                 $(this).data('mouseover_counter', $(this).data('mouseover_counter') + 1);
                                 if ($(this).data('mouseover_counter') == 1) {
                                     $(this).append('<span id="' + id + '_use" class="btn btn-default pull-right" style="width:30%; margin:0px; padding: 0px">Use</span>');
 
-                                    $('#' + id + '_use').on('mousedown', function(e){
+                                    $('#' + id + '_use').off('mousedown.s2gt_use');
+                                    $('#' + id + '_use').on('mousedown.s2gt_use', function(e){
                                         //console.log('mousedown: click: button use');
 
                                         $('#' + id + '_use').remove();
@@ -146,20 +187,22 @@ THE SOFTWARE.
                                     });
                                 }
                             });
-                            $('#' + id).on('mouseleave', function() {
+                            $('#' + id).off('mouseleave.s2gt_use');
+                            $('#' + id).on('mouseleave.s2gt_use', function() {
                                 $(this).data('mouseover_counter', 0);
                                 $('#' + id + '_use').remove();
                             });
                         }
 
-                        $(this).bind('mouseup', function(e) {
+                        $(this).off('mouseup.s2gt_treeitem');
+                        $(this).on('mouseup.s2gt_treeitem', function(e) {
                             var id = $(this).attr('id').match(/-\d*$/)[0].replace('-','');
 
                             $(this).css('display', 'none');
                             $(this).css('visibility', 'hidden');
 
-                            parent_id = get_parent_id(id);
                             breadcrumb.push(parent_id);
+                            //console.log('path: ' + breadcrumb);
 
                             open_children(id);
 							e.preventDefault();
@@ -167,7 +210,8 @@ THE SOFTWARE.
                         });
 					} else {
 
-                        $(this).bind('mouseup', function(e) {
+                        $(this).off('mouseup.s2gt_treeitem');
+                        $(this).on('mouseup.s2gt_treeitem', function(e) {
                             var id = $(this).attr('id').match(/-\d*$/)[0].replace('-','');
 
                             $(this).css('display', 'none');
@@ -224,74 +268,73 @@ THE SOFTWARE.
         $(".select2-results__options li").each(function() {
             id = $(this).attr('id');
 
-            for (x = 0; (x < parent_ids.length); x++) {
-                if (id && id.match(/-\d*$/) && parent_ids[x].id == id.match(/-\d*$/)[0].replace('-','') && parent_ids[x].parent_id == parent_id) {
-					if (has_children(id.match(/-\d*$/)[0].replace('-',''))) {
-						$(this).css('font-weight', 'bold');
+            var c_parent_id;
+            var c_id;
+            if (typeof $(this).data('data') !== undefined && typeof $(this).data('data').element !== undefined) {
+                c_parent_id = $($(this).data('data').element).attr('parent')
+                c_id = $($(this).data('data').element).attr('parent')
+            } else {
+                return;
+            }
 
-                        //TODO: callback to decorate bold items
-						//$(this).decorateBold($this); 
-						////console.log($(this).text());
-						$(this).css('font-weight', 'bold');
+            if (id && id.match(/-\d*$/) && c_parent_id == parent_id) {
+                if (has_children(id.match(/-\d*$/)[0].replace('-',''))) {
+                    $(this).css('font-weight', 'bold');
 
-                        // use button
-                        if (opts.showUseButton) {
-                            $(this).data('mouseover_counter', 0);
-                            var item = $(this);
-                            $('#' + id).on('mouseover', function() {
-                                $(this).data('mouseover_counter', $(this).data('mouseover_counter') + 1);
-                                if ($(this).data('mouseover_counter') == 1) {
-                                    $(this).append('<span id="' + id + '_use" class="btn btn-default pull-right" style="width:30%; margin:0px; padding: 0px">Use</span>');
+                    //TODO: callback to decorate bold items
+                    //$(this).decorateBold($this); 
+                    ////console.log($(this).text());
+                    $(this).css('font-weight', 'bold');
 
-                                    $('#' + id + '_use').on('mousedown', function(e){
-                                        //console.log('mousedown: click: button use');
+                    // use button
+                    if (opts.showUseButton) {
+                        $(this).data('mouseover_counter', 0);
+                        var item = $(this);
+                        $('#' + id).off('mouseover.s2gt_use');
+                        $('#' + id).on('mouseover.s2gt_use', function() {
+                            $(this).data('mouseover_counter', $(this).data('mouseover_counter') + 1);
+                            if ($(this).data('mouseover_counter') == 1) {
+                                $(this).append('<span id="' + id + '_use" class="btn btn-default pull-right" style="width:30%; margin:0px; padding: 0px">Use</span>');
 
-                                        $('#' + id + '_use').remove();
-                                        select(item);
+                                $('#' + id + '_use').off('mousedown.s2gt_use');
+                                $('#' + id + '_use').on('mousedown.s2gt_use', function(e){
+                                    //console.log('mousedown: click: button use');
 
-                                        e.preventDefault();
-                                        e.stopPropagation();
-                                    });
-                                }
-                            });
-                            $('#' + id).on('mouseleave', function() {
-                                $(this).data('mouseover_counter', 0);
-                                $('#' + id + '_use').remove();
-                            });
-                        }
+                                    $('#' + id + '_use').remove();
+                                    select(item);
 
-                        $(this).bind('mouseup', function(e) {
-                            var id = $(this).attr('id').match(/-\d*$/)[0].replace('-','');
-
-                            $(this).css('display', 'none');
-                            $(this).css('visibility', 'hidden');
-
-                            parent_id = get_parent_id(id);
-                            breadcrumb.push(parent_id);
-
-                            open_children(id);
+                                    e.preventDefault();
+                                    e.stopPropagation();
+                                });
+                            }
                         });
+                        $('#' + id).off('mouseleave.s2gt_use');
+                        $('#' + id).on('mouseleave.s2gt_use', function() {
+                            $(this).data('mouseover_counter', 0);
+                            $('#' + id + '_use').remove();
+                        });
+                    }
 
-					}
-
-                    $(this).css('display', 'block');
-                    $(this).css('visibility', 'visible');
-
-                    $(this).bind('mouseup', function(e) {
-                        var cid = $(this).attr('id').match(/-\d*$/)[0].replace('-','');
-                        var cparent_id = get_parent_id(cid);
-                        breadcrumb.push(cparent_id);
-                        if (has_children(cid)) {
-                            open_children(cid);
-							e.preventDefault();
-							e.stopPropagation();
-                        } else {
-                            //select(this);
-                        }
-                    });
-
-                    break;
                 }
+
+                $(this).css('display', 'block');
+                $(this).css('visibility', 'visible');
+
+                $(this).off('mouseup.s2gt_treeitem');
+                $(this).on('mouseup.s2gt_treeitem', function(e) {
+                    var cid = $(this).attr('id').match(/-\d*$/)[0].replace('-','');
+                    var cparent_id = get_parent_id(cid);
+                    breadcrumb.push(cparent_id);
+                    //console.log(breadcrumb);
+
+                    if (has_children(cid)) {
+                        open_children(cid);
+                        e.preventDefault();
+                        e.stopPropagation();
+                    } else {
+                        //select(this);
+                    }
+                });
             }
         });
 
