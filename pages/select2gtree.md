@@ -655,7 +655,7 @@ $(document).ready(function() {
           <h2>Without Breadcrumbs</h2>
           <p>
 <pre><code class="javascript">$('#timezone3').select2gtree({
-    showBreadcrumb: false
+    showBreadcrumbs: false
 });
 </code></pre>
 
@@ -904,7 +904,7 @@ $(document).ready(function() {
 
             <script type="text/javascript">
                 $('#timezone3').select2gtree({
-                    showBreadcrumb: false
+                    showBreadcrumbs: false
                 });
             </script>
 
