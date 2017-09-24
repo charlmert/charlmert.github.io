@@ -27,14 +27,16 @@ THE SOFTWARE.
 		var defaults = {
 			language: "en",
 			theme: "bootstrap",
-			showUseButton: true
+			showUseButton: true,
+			showBreadcrumb: true
 		};
 
-		//TODO: fix back button not going back to root when selecting a 2nd level child and clicking back twice
-		//TODO: fix speed issue, back button child select
+		//DONE: fix back button not going back to root when selecting a 2nd level child and clicking back twice
+		//DONE: fix speed issue, back button child select
 		//TODO: fix back button on nested default selected
 		//TODO: scroll to selected item
-        //TODO: add options for decorator callbacks
+		//TODO: add showBreadcrumb option
+        //TODO: demo templateResult styling
         //TODO: enable multi select
         //TODO: option to display breadcrumbs in main input text box
         //TODO: support ajax loaded menu items
@@ -68,7 +70,7 @@ THE SOFTWARE.
             $(this).select2(opts).on("select2:open", open);
 
             select2_obj = $(this).data('select2');
-            select2_core();
+            select2_core(this);
 
             //console.log(jQuery._data( $(this).get(0), "events" ));
         }
@@ -81,14 +83,29 @@ THE SOFTWARE.
     var select_ptr = null;
     var open_counter = [];
     var breadcrumb = [];
+    var breadcrumb_texts = [];
     var selectOriginalEvent = null;
     var select2_obj = null;
+    var prev_selected_text = null;
+    var selected_text = null;
+    var target_id = null;
 
-    function select2_core() {
+    function select2_core(obj) {
         //console.log(select2_obj);
+        var opts = $(obj).data('options');
+
+        select2_obj.on('select', function (e) {
+            if (opts.showBreadcrumb) {
+                clear_breadcrumbs();
+                $('#' + target_id).text(selected_text);
+            }
+        });
 
         select2_obj.on('close', function (params) {
-            breadcrumb = [];
+            if (opts.showBreadcrumb) {
+                clear_breadcrumbs();
+                $('#' + target_id).text(prev_selected_text);
+            }
         });
 
         /*
@@ -112,6 +129,10 @@ THE SOFTWARE.
         $('.select2-search').css('display', 'block');
         $('.select2-results').css('display', 'block');
 
+        select_id = $(this).attr('id');
+        target_id = 'select2-' + select_id + '-container';
+        prev_selected_text = $('#' + target_id).attr('title');
+
         select_ptr = this;
         $(this).children().each(function(i, o){
             parent_ids.push({
@@ -122,6 +143,19 @@ THE SOFTWARE.
         });
 
 		if (open_counter[instance_id] == 0) {
+            // Breadcrumb
+            /*
+            if (opts.showBreadcrumb) {
+                if ($('.select2gtree-breadcrumb')) {
+                    $('.select2gtree-breadcrumb').remove();
+                }
+                $('.select2').prepend('<div class="select2gtree-breadcrumb"></div>');
+                $('.select2gtree-breadcrumb').hide('fast');
+                $('.select2gtree-breadcrumb').text('');
+            }
+            */
+
+            // Back button
 			$('.select2-search').append('<div id="select2tree_back_container" class="input-group"><span id="select2tree_back" class="btn btn-default input-group-addon"> <i class="fa fa-angle-left"> </i> </span> </div>');
 			$('.select2-search__field').appendTo('#select2tree_back_container');
             $('.select2-search').find('input').addClass('form-control');
@@ -131,10 +165,17 @@ THE SOFTWARE.
 			$('#select2tree_back').unbind('mousedown');
 			$('#select2tree_back').on('mousedown', function(){
 				parent_id = breadcrumb.pop();
+
+                if (opts.showBreadcrumb) {
+                    breadcrumb_texts.pop();
+                    update_breadcrumb(breadcrumb_texts);
+                }
+
 				//console.log(breadcrumb);
 
 				open_children(parent_id);
 			});
+
         }
 
         $(this).children().each(function(i, o) {
@@ -151,15 +192,37 @@ THE SOFTWARE.
                 id = $(this).attr('id');
 
                 var parent_id;
+                var text;
                 if (typeof $(this).data('data') !== undefined && typeof $(this).data('data').element !== undefined) {
                     parent_id = $($(this).data('data').element).attr('parent')
+                    text = $($(this).data('data').element).text();
                 } else {
                     return;
+                }
+
+                if (opts.showBreadcrumb) {
+                    $(this).on('mouseover', function() {
+                        breadcrumb_texts.push(text);
+                        update_breadcrumb(breadcrumb_texts);
+                        selected_text = text;
+                    });
+
+                    $(this).on('mouseout', function() {
+                        breadcrumb_texts.pop();
+                        update_breadcrumb(breadcrumb_texts);
+                        selected_text = '';
+                    });
                 }
 
                 if (id && id.match(/-\d*$/) && display_ids.indexOf(id.match(/-\d*$/)[0].replace('-','')) > -1) {
 
 					if (has_children(id.match(/-\d*$/)[0].replace('-',''))) {
+                        if (opts.showBreadcrumb) {
+                            if ($('.select2gtree-breadcrumb')) {
+                                $('.select2gtree-breadcrumb').show('fast');
+                            }
+                        }
+
                         //TODO: callback to decorate bold items
 						//$(this).decorateBold($this);
 						////console.log($(this).text());
@@ -176,7 +239,7 @@ THE SOFTWARE.
                                     $(this).append('<span id="' + id + '_use" class="btn btn-default pull-right" style="width:30%; margin:0px; padding: 0px">Use</span>');
 
                                     $('#' + id + '_use').off('mousedown.s2gt_use');
-                                    $('#' + id + '_use').on('mousedown.s2gt_use', function(e){
+                                    $('#' + id + '_use').on('mousedown.s2gt_use', function(e) {
                                         //console.log('mousedown: click: button use');
 
                                         $('#' + id + '_use').remove();
@@ -202,7 +265,11 @@ THE SOFTWARE.
                             $(this).css('visibility', 'hidden');
 
                             breadcrumb.push(parent_id);
-                            //console.log('path: ' + breadcrumb);
+
+                            if (opts.showBreadcrumb) {
+                                breadcrumb_texts.push($(this).text());
+                                update_breadcrumb(breadcrumb_texts);
+                            }
 
                             open_children(id);
 							e.preventDefault();
@@ -220,7 +287,6 @@ THE SOFTWARE.
                             select(this);
                         });
                     }
-
 
                 } else {
                     $(this).css('display', 'none');
@@ -325,13 +391,18 @@ THE SOFTWARE.
                     var cid = $(this).attr('id').match(/-\d*$/)[0].replace('-','');
                     var cparent_id = get_parent_id(cid);
                     breadcrumb.push(cparent_id);
-                    //console.log(breadcrumb);
+
+                    if (opts.showBreadcrumb) {
+                        breadcrumb_texts.push($(this).text());
+                        update_breadcrumb(breadcrumb_texts);
+                    }
 
                     if (has_children(cid)) {
                         open_children(cid);
                         e.preventDefault();
                         e.stopPropagation();
                     } else {
+                        // Default select handler will handle this
                         //select(this);
                     }
                 });
@@ -407,9 +478,9 @@ THE SOFTWARE.
         $('.select2').removeClass('select2-container--open');
         $('.select2').addClass('select2-container--below');
 
+        clear_breadcrumbs();
     }
 
-	//TODO: implement set_selected
     function set_selected(obj, val) {
         select_id = $(obj).attr('id');
         target_id = 'select2-' + select_id + '-container';
@@ -417,6 +488,20 @@ THE SOFTWARE.
         $('#' + select_id).val(val);
         $('#' + target_id).attr('title', $('#' + select_id).text());
         $('#' + target_id).text($('#' + select_id).text());
+
+        clear_breadcrumbs();
     }
 
+    function update_breadcrumb(breadcrumb_texts) {
+        if (breadcrumb_texts.length > 0) {
+            $('#' + target_id).text(breadcrumb_texts.join(' / '));
+        } else {
+            $('#' + target_id).text(prev_selected_text);
+        }
+    }
+
+    function clear_breadcrumbs() {
+        breadcrumb = [];
+        breadcrumb_texts = [];
+    }
 })(jQuery);
