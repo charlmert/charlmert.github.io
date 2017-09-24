@@ -652,10 +652,11 @@ $(document).ready(function() {
         <div class="col-md-4">
       <div class="form-group" id="timezone-group" style="margin-bottom: 5px;">
         <div class="col-sm-12 col-md-12 col-lg-12">
-          <h2>Set Selected</h2>
+          <h2>Without Breadcrumbs</h2>
           <p>
-<pre><code class="javascript">$('#timezone3').select2gtree({setSelected : 4});
-
+<pre><code class="javascript">$('#timezone3').select2gtree({
+    showBreadcrumb: false
+});
 </code></pre>
 
           </p>
@@ -902,8 +903,9 @@ $(document).ready(function() {
       </div>
 
             <script type="text/javascript">
-                $('#timezone3').select2gtree();
-                $('#timezone3').select2gtree({setSelected : 36});
+                $('#timezone3').select2gtree({
+                    showBreadcrumb: false
+                });
             </script>
 
           <!--<p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>-->
