@@ -1,7 +1,7 @@
 /*
 The MIT License
 
-Copyright (c) 2017 Charl Joseph Mert, Inc. http://charl.faceclues.co.za/select2gtree/
+Copyright (c) 2017 Charl Joseph Mert, Inc. http://charlmert.github.io/select2gtree/
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal

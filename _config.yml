@@ -9,7 +9,7 @@ relative_permalinks: false
 title:               Charl Joseph Mert
 tagline:             "Psalms 46:10 KJV: Be still, and know that I am God: I will be exalted among the heathen, I will be exalted in the earth."
 description:         Charl Mert Blog...
-url: https://charl.faceclues.co.za
+url: https://charlmert.github.io
 baseurl: ""
 urlimg: https://dyndna.github.io/lanyon-plus/images/
 markdown: kramdown
@@ -50,7 +50,7 @@ owner:
   # Social networking links used in footer. Update and remove as you like.
   #twitter:        charlmert
   #facebook:       
-  github:         charljmert
+  github:         charlmert
   #stackexchange:  
   linkedin:       https://www.linkedin.com/in/charlmert
   #instagram:      

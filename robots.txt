@@ -55,4 +55,4 @@ Disallow: /files/
 User-agent: *
 Disallow: /
 
-Sitemap: http://charl.faceclues.co.za/sitemap.xml
+Sitemap: http://charlmert.github.io/sitemap.xml
